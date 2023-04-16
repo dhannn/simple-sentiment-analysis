@@ -11,3 +11,5 @@ def naive_bayes(X_train: pd.DataFrame, y_train: pd.DataFrame) -> MultinomialNB:
     X_train, y_train = train_test_split(X, y, random_state = 15)
     classifier = MultinomialNB()
     classifier.fit(X_train, y_train)
+
+    return classifier
