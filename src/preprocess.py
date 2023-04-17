@@ -36,12 +36,9 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
     # Remove accents
     df['text'] = df['text'].apply(lambda x: unicodedata.normalize('NFKD', x).encode('ASCII', 'ignore').decode())
 
-    # Tokenization
-    df['text'] = df['text'].apply(nltk.word_tokenize)
-
     # Remove unnecessary characters
     df['text'] = df['text'].apply(lambda x: re.sub('[^a-zA-Z0-9\s]', '', x))
-    
+
     # Stopword removal
     stop_words = set(stopwords.words('english'))
     df['text'] = df['text'].apply(lambda x: [word for word in x if word.lower() not in stop_words])
@@ -49,10 +46,6 @@ def preprocess(df: pd.DataFrame) -> pd.DataFrame:
     # Stemming
     stemmer = PorterStemmer()
     df['text'] = df['text'].apply(lambda x: [stemmer.stem(word) for word in x])
-
-    # Lemmatization
-    lemmatizer = WordNetLemmatizer()
-    df['text'] = df['text'].apply(lambda x: [lemmatizer.lemmatize(word) for word in x])
 
     # Spell checking and correction
     spell = SpellChecker()
